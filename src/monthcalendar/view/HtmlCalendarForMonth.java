@@ -6,6 +6,7 @@ package monthcalendar.view;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -38,6 +39,14 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
 
     public HtmlCalendarForMonth() {
         super();
+    }
+
+    public HtmlCalendarForMonth(DayOfWeek weekStart) {
+        super(weekStart);
+    }
+
+    public HtmlCalendarForMonth(DayOfWeek weekStart, LocalDate currentDay) {
+        super(weekStart, currentDay);
     }
 
     @Override

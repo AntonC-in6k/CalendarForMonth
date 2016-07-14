@@ -1,6 +1,7 @@
 package monthcalendar.view;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,6 +15,14 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
 
     public AnsiiCalendarForMonth() {
         super();
+    }
+
+    public AnsiiCalendarForMonth(DayOfWeek weekStart) {
+        super(weekStart);
+    }
+
+    public AnsiiCalendarForMonth(DayOfWeek weekStart, LocalDate currentDay) {
+        super(weekStart, currentDay);
     }
 
     @Override

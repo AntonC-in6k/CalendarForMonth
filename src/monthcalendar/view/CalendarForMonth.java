@@ -151,12 +151,4 @@ public abstract class CalendarForMonth implements Calendar {
         this.weekendDays=weekendDays;
     }
 
-    public void setDayForTracking(LocalDate dayForTracking){
-        this.dayForTracking = dayForTracking;
-    }
-
-    public void setWeekStart(DayOfWeek weekStart){
-        this.weekStart = weekStart;
-    }
-
 }
