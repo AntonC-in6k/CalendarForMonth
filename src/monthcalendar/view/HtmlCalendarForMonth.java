@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class HtmlCalendar extends Calendar {
+public class HtmlCalendarForMonth extends CalendarForMonth {
     public static final String STYLE =
             "\ttd{\n" +
                     "\tpadding:5 px;\n" +
@@ -29,15 +29,15 @@ public class HtmlCalendar extends Calendar {
             "<html>\n" +
                     "<head> " +
                     CONNECT_CSS +
-                    "<title>Calendar for month</title>\n" +
+                    "<title>CalendarForMonth for month</title>\n" +
                     "</head>\n" +
                     "<body>\n";
     public static final String FOOTER =
             "</body>\n" +
                     "</html>";
 
-    public HtmlCalendar(List<LocalDate> monthDays, LocalDate date) {
-        super(monthDays, date);
+    public HtmlCalendarForMonth() {
+        super();
     }
 
     @Override
@@ -104,7 +104,8 @@ public class HtmlCalendar extends Calendar {
     }
 
     @Override
-    public void printCalendar() throws IOException {
+    public void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
+        baseInitialization(monthDays, date);
         writeCalendarInfile();
         writeStyleSheetInFile();
     }

@@ -7,13 +7,13 @@ import java.util.List;
 /**
  * Created by Mr_Blame on 13.07.2016.
  */
-public class AnsiiCalendar extends Calendar {
+public class AnsiiCalendarForMonth extends CalendarForMonth {
     public static final String COLOR_RESET = "\u001B[0m";
     public static final String COLOR_FOR_WEEKENDS = "\u001B[33m";
     public static final String COLOR_FOR_CURRENT_DAY = "\u001B[34m";
 
-    public AnsiiCalendar(List<LocalDate> monthDays, LocalDate date) {
-        super(monthDays, date);
+    public AnsiiCalendarForMonth() {
+        super();
     }
 
     @Override
@@ -71,7 +71,8 @@ public class AnsiiCalendar extends Calendar {
     }
 
     @Override
-    public void printCalendar() throws IOException {
+    public void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
+        baseInitialization(monthDays, date);
         System.out.println(formatMonthTitle());
         System.out.println(makeTitle());
         System.out.println(monthDaysToString());

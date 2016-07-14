@@ -1,5 +1,7 @@
 package monthcalendar.view;
 
+import monthcalendar.Calendar;
+
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -14,25 +16,45 @@ import java.util.Locale;
  * Created by Mr_Blame on 13.07.2016.
  */
 
-public abstract class Calendar {
+public abstract class CalendarForMonth implements Calendar {
     public static final int DAYS_IN_WEAK = 7;
     public static final String STYLE_OF_SHORT_DAYS_NAMES = "en";
-    public static final List<String> WEEKEND_SHORT_NAMES =
-            Arrays.asList(DayOfWeek.SATURDAY.getDisplayName(TextStyle.SHORT,
-                    new Locale(STYLE_OF_SHORT_DAYS_NAMES)),
-                    DayOfWeek.SUNDAY.getDisplayName(TextStyle.SHORT,
-                            new Locale(STYLE_OF_SHORT_DAYS_NAMES)));
 
     private List<LocalDate> monthDays;
     private int month;
     private int year;
+    private List<DayOfWeek> weekendDays;
+    private DayOfWeek weekStart;
     private LocalDate dayForTracking;
 
-    public Calendar(List<LocalDate> monthDays, LocalDate date) {
-        this.monthDays = monthDays;
-        this.month = date.getMonthValue();
-        this.year = date.getYear();
+    public CalendarForMonth() {
         dayForTracking = LocalDate.now();
+        weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
+
+    }
+
+    public CalendarForMonth(DayOfWeek weekStart){
+        this.weekStart=weekStart;
+        dayForTracking = LocalDate.now();
+        weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
+    }
+
+    public CalendarForMonth(DayOfWeek weekStart, LocalDate currentDay){
+        this.weekStart=weekStart;
+        dayForTracking = currentDay;
+        weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
+    }
+
+    protected void setMonthDays(List<LocalDate> monthDays){
+        this.monthDays = monthDays;
+    }
+
+    protected void setMonth(LocalDate date){
+        this.month = date.getMonthValue();
+    }
+
+    protected void setYear(LocalDate date){
+        this.year = date.getYear();
     }
 
     protected abstract String formatMonthTitle();
@@ -54,12 +76,14 @@ public abstract class Calendar {
         return formatDayTitleLine(result);
     }
 
-
     protected abstract String formatDayTitle(String dayName);
 
     protected String chooseDayTitle(String dayName) {
         String result = new String();
-        if (dayName.equals(WEEKEND_SHORT_NAMES.get(0)) || dayName.equals(WEEKEND_SHORT_NAMES.get(1))) {
+        if (dayName.equals(weekendDays.get(0).getDisplayName(TextStyle.SHORT,
+                new Locale(STYLE_OF_SHORT_DAYS_NAMES))) ||
+                dayName.equals(weekendDays.get(1).getDisplayName(TextStyle.SHORT,
+                new Locale(STYLE_OF_SHORT_DAYS_NAMES)))) {
             result = "weekend";
         }
         return result;
@@ -99,7 +123,7 @@ public abstract class Calendar {
     protected abstract String formatDay(LocalDate day);
 
     protected String chooseColorForDayPrinting(LocalDate day) {
-        if (day.getDayOfWeek() == DayOfWeek.SATURDAY || day.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        if (day.getDayOfWeek() == weekendDays.get(0) || day.getDayOfWeek() == weekendDays.get(1)) {
             return "weekend";
         }
         if (day.isEqual(dayForTracking)) {
@@ -114,5 +138,25 @@ public abstract class Calendar {
         return day.getDayOfWeek() == DayOfWeek.SUNDAY;
     }
 
-    public abstract void printCalendar() throws IOException;
+    public abstract void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException;
+
+    public void baseInitialization(List<LocalDate> monthDays, LocalDate date){
+        setMonthDays(monthDays);
+        setMonth(date);
+        setYear(date);
+    }
+
+    @Override
+    public void setWeekendDays(List<DayOfWeek> weekendDays){
+        this.weekendDays=weekendDays;
+    }
+
+    public void setDayForTracking(LocalDate dayForTracking){
+        this.dayForTracking = dayForTracking;
+    }
+
+    public void setWeekStart(DayOfWeek weekStart){
+        this.weekStart = weekStart;
+    }
+
 }

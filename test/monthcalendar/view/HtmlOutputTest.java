@@ -14,7 +14,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 public class HtmlOutputTest {
-    private HtmlCalendar htmlCalendar;
+    private HtmlCalendarForMonth htmlCalendar;
 
     public List<LocalDate> getTableForJulyMonth(int year, int month, int day) {
         List<LocalDate> result = new ArrayList<>();
@@ -27,7 +27,8 @@ public class HtmlOutputTest {
 
     public void loadCalendarForMonth(int year, int month, int day) {
         LocalDate date = LocalDate.of(year, month, day);
-        htmlCalendar = new HtmlCalendar(getTableForJulyMonth(year, month, day), date);
+        htmlCalendar = new HtmlCalendarForMonth();
+        htmlCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
     }
 
     @Test

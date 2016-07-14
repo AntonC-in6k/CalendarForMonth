@@ -13,8 +13,7 @@ import static org.junit.Assert.assertThat;
 
 public class AnsiiOutputTest {
 
-    private AnsiiCalendar ansiiCalendar;
-    public static final String COLOR_RESET = "\u001B[0m";
+    private AnsiiCalendarForMonth ansiiCalendar;
 
     public List<LocalDate> getTableForJulyMonth(int year, int month, int day) {
         List<LocalDate> result = new ArrayList<>();
@@ -27,7 +26,8 @@ public class AnsiiOutputTest {
 
     public void loadCalendarForMonth(int year, int month, int day) {
         LocalDate date = LocalDate.of(year, month, day);
-        ansiiCalendar = new AnsiiCalendar(getTableForJulyMonth(year, month, day), date);
+        ansiiCalendar = new AnsiiCalendarForMonth();
+        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
     }
 
     @Test
@@ -42,8 +42,8 @@ public class AnsiiOutputTest {
         loadCalendarForMonth(2016, 7, 14);
         String[] daysTitle = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         String title = ansiiCalendar.makeTitle().toString().trim();
-        title = title.replace(AnsiiCalendar.COLOR_FOR_WEEKENDS, "");
-        title = title.replace(AnsiiCalendar.COLOR_RESET, "");
+        title = title.replace(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS, "");
+        title = title.replace(AnsiiCalendarForMonth.COLOR_RESET, "");
         String[] days = title.split("  ");
         assertThat(days, is(daysTitle));
     }
@@ -75,8 +75,8 @@ public class AnsiiOutputTest {
         int[] weekendsDaysIndex = {2, 3};
         String line = ansiiCalendar.monthDaysToString().toString();
         assertThat(line, allOf(
-                containsString(AnsiiCalendar.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[0])),
-                containsString(AnsiiCalendar.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[1]))));
+                containsString(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[0])),
+                containsString(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[1]))));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class AnsiiOutputTest {
         loadCalendarForMonth(2016, 7, 14);
         int currentDay = 14;
         String line = ansiiCalendar.monthDaysToString();
-        assertThat(line, containsString(AnsiiCalendar.COLOR_FOR_CURRENT_DAY + "   " + (currentDay)));
+        assertThat(line, containsString(AnsiiCalendarForMonth.COLOR_FOR_CURRENT_DAY + "   " + (currentDay)));
     }
 
 }

@@ -2,10 +2,13 @@ package monthcalendar;
 
 import monthcalendar.model.CreateCalendarForMonth;
 import monthcalendar.model.ParamHandler;
-import monthcalendar.view.AnsiiCalendar;
-import monthcalendar.view.HtmlCalendar;
+import monthcalendar.view.AnsiiCalendarForMonth;
+import monthcalendar.view.HtmlCalendarForMonth;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -15,17 +18,20 @@ import java.io.IOException;
 public class Main {
     public static void
     main(String[] args) throws IOException {
-        String[] parameter = new String[]{"-m=7", "-y=2016", "-o=html"};
+        String[] parameter = new String[]{"-m=7", "-y=2016", "-o=ansii"};
+        List<DayOfWeek> weekendDays = Arrays.asList(DayOfWeek.WEDNESDAY,DayOfWeek.FRIDAY);
         ParamHandler paramHandler = new ParamHandler(parameter);
         CreateCalendarForMonth calendarForMonth = new CreateCalendarForMonth(parameter);
         if (paramHandler.getFormat().equals("html")) {
-            HtmlCalendar htmlCalendar = new HtmlCalendar(calendarForMonth.getMonthDays(),
+            HtmlCalendarForMonth htmlCalendar = new HtmlCalendarForMonth();
+            htmlCalendar.setWeekendDays(weekendDays);
+            htmlCalendar.printCalendar(calendarForMonth.getMonthDays(),
                     calendarForMonth.getDateForView());
-            htmlCalendar.printCalendar();
         } else {
-            AnsiiCalendar ansiiCalendar = new AnsiiCalendar(calendarForMonth.getMonthDays(),
-                    calendarForMonth.getDateForView()); //My program gets parameter in format -m= *, where m - month
-            ansiiCalendar.printCalendar();
+            AnsiiCalendarForMonth ansiiCalendar = new AnsiiCalendarForMonth();
+            ansiiCalendar.setWeekendDays(weekendDays);
+            ansiiCalendar.printCalendar(calendarForMonth.getMonthDays(),
+                    calendarForMonth.getDateForView());
         }
         System.exit(0);
     }
