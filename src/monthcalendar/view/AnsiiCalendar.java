@@ -1,10 +1,8 @@
 package monthcalendar.view;
 
-import java.time.DayOfWeek;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Mr_Blame on 13.07.2016.
@@ -26,19 +24,20 @@ public class AnsiiCalendar extends Calendar {
     }
 
     @Override
-    protected String formatDaysTitle() {
+    protected String formatDayTitle(String dayName) {
         String result = new String();
-        for (String day :
-                createDaysTitle()) {
-            if (day.equals(DayOfWeek.SATURDAY
-                    .getDisplayName(TextStyle.SHORT
-                            , new Locale(STYLE_OF_SHORT_DAYS_NAMES)))) {
-                result += COLOR_FOR_WEEKENDS;
-            }
-            result += String.format("%5s", day);
+        if (chooseDayTitle(dayName) == "weekend") {
+            result += COLOR_FOR_WEEKENDS;
         }
+        result += String.format("%5s", dayName);
+
         result += COLOR_RESET;
         return result;
+    }
+
+    @Override
+    protected String formatDayTitleLine(String dayTitles) {
+        return dayTitles + "\n";
     }
 
     @Override
@@ -62,9 +61,19 @@ public class AnsiiCalendar extends Calendar {
     }
 
     @Override
-    public void printCalendar() {
+    protected String printEmptySpace() {
+        return String.format("%5s", "");
+    }
+
+    @Override
+    protected String additionalForMonthDays(String tableDays) {
+        return tableDays + "\n";
+    }
+
+    @Override
+    public void printCalendar() throws IOException {
         System.out.println(formatMonthTitle());
-        System.out.println(formatDaysTitle());
+        System.out.println(makeTitle());
         System.out.println(monthDaysToString());
     }
 
