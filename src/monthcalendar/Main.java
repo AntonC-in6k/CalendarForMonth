@@ -18,7 +18,7 @@ import java.util.List;
 public class Main {
     public static void
     main(String[] args) throws IOException {
-        String[] parameter = new String[]{"-m=7", "-y=2016", "-o=ansii"};
+        String[] parameter = new String[]{"-m=6", "-y=2016", "-o=ansii"};
         List<DayOfWeek> weekendDays = Arrays.asList(DayOfWeek.WEDNESDAY,DayOfWeek.FRIDAY);
         ParamHandler paramHandler = new ParamHandler(parameter);
         CreateCalendarForMonth calendarForMonth = new CreateCalendarForMonth(parameter);
@@ -28,7 +28,7 @@ public class Main {
             htmlCalendar.printCalendar(calendarForMonth.getMonthDays(),
                     calendarForMonth.getDateForView());
         } else {
-            AnsiiCalendarForMonth ansiiCalendar = new AnsiiCalendarForMonth();
+            AnsiiCalendarForMonth ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.SATURDAY);
             ansiiCalendar.setWeekendDays(weekendDays);
             ansiiCalendar.printCalendar(calendarForMonth.getMonthDays(),
                     calendarForMonth.getDateForView());

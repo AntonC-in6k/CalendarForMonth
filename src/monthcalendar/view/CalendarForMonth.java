@@ -17,7 +17,7 @@ import java.util.Locale;
  */
 
 public abstract class CalendarForMonth implements Calendar {
-    public static final int DAYS_IN_WEAK = 7;
+    public static final int DAYS_IN_WEEK = 7;
     public static final String STYLE_OF_SHORT_DAYS_NAMES = "en";
 
     private List<LocalDate> monthDays;
@@ -28,6 +28,7 @@ public abstract class CalendarForMonth implements Calendar {
     private LocalDate dayForTracking;
 
     public CalendarForMonth() {
+        this.weekStart=DayOfWeek.MONDAY;
         dayForTracking = LocalDate.now();
         weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
 
@@ -91,8 +92,8 @@ public abstract class CalendarForMonth implements Calendar {
 
     protected List<String> createDaysTitle() {
         List<String> result = new ArrayList<>();
-        for (int i = 1; i <= DAYS_IN_WEAK; i++) {
-            result.add(i - 1, DayOfWeek.of(i).getDisplayName(TextStyle.SHORT,
+        for (int i = 1; i <= DAYS_IN_WEEK; i++) {
+            result.add(i-1, weekStart.plus(i-1).getDisplayName(TextStyle.SHORT,
                     new Locale(STYLE_OF_SHORT_DAYS_NAMES)));
         }
         return result;
@@ -110,7 +111,8 @@ public abstract class CalendarForMonth implements Calendar {
 
     protected List<String> formatMonthDays() {
         List<String> result = new ArrayList<>();
-        int numberOfEmptySpaces = monthDays.get(0).getDayOfWeek().getValue() - 1;
+        int numberOfEmptySpaces = monthDays.get(0).getDayOfWeek().getValue()-weekStart.getValue();
+        //if (numberOfEmptySpaces<0){numberOfEmptySpaces==}
         for (int i = 0; i < numberOfEmptySpaces; i++) {
             result.add(printEmptySpace());
         }
@@ -135,15 +137,16 @@ public abstract class CalendarForMonth implements Calendar {
     protected abstract String printEmptySpace();
 
     protected boolean gotoNewLineInTable(LocalDate day) {
-        return day.getDayOfWeek() == DayOfWeek.SUNDAY;
+        return day.getDayOfWeek() == weekStart.minus(1);
     }
 
     public abstract void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException;
 
-    public void baseInitialization(List<LocalDate> monthDays, LocalDate date){
+    protected void baseInitialization(List<LocalDate> monthDays, LocalDate date){
         setMonthDays(monthDays);
         setMonth(date);
         setYear(date);
+
     }
 
     @Override
