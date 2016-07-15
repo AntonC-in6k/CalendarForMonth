@@ -6,19 +6,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MonthPeriod {
+    public final static  Integer NUMBER_OF_MONTHS_IN_YEAR=12;
     private List<YearMonth> yearMonths;
     private List<Integer> step;
     private int currentStepIndex;
 
     public MonthPeriod(YearMonth yearMonth) {
         yearMonths = Arrays.asList(yearMonth);
-        step = Arrays.asList(1, 12);
+        step = Arrays.asList(1, NUMBER_OF_MONTHS_IN_YEAR);
         currentStepIndex = 0;
     }
 
     public MonthPeriod(List<YearMonth> yearMonths, int currentStepIndex) {
         this.yearMonths = yearMonths;
-        step = Arrays.asList(1, 12);
+        step = Arrays.asList(1, NUMBER_OF_MONTHS_IN_YEAR);
         this.currentStepIndex = currentStepIndex;
     }
 
@@ -52,7 +53,7 @@ public class MonthPeriod {
 
     private List<YearMonth> changePeriod(int step) {
         List<YearMonth> result = new ArrayList<>(Math.abs(step));
-        if (Math.abs(step) == 12) {
+        if (Math.abs(step) == NUMBER_OF_MONTHS_IN_YEAR) {
             result.addAll(getYear(yearMonths.get(0).plusYears(1).getYear()));
             return result;
         }
@@ -65,7 +66,7 @@ public class MonthPeriod {
 
     private List<YearMonth> getYear(int year) {
         List<YearMonth> result = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= NUMBER_OF_MONTHS_IN_YEAR; i++) {
             result.add(YearMonth.of(year, i));
         }
         return result;
