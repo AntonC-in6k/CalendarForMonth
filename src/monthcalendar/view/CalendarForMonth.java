@@ -16,7 +16,7 @@ import java.util.Locale;
  * Created by Mr_Blame on 13.07.2016.
  */
 
-public abstract class CalendarForMonth implements Calendar {
+public abstract class CalendarForMonth  {
     public static final int DAYS_IN_WEEK = 7;
     public static final String STYLE_OF_SHORT_DAYS_NAMES = "en";
 
@@ -31,7 +31,6 @@ public abstract class CalendarForMonth implements Calendar {
         this.weekStart=DayOfWeek.MONDAY;
         dayForTracking = LocalDate.now();
         weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
-
     }
 
     public CalendarForMonth(DayOfWeek weekStart){
@@ -56,6 +55,14 @@ public abstract class CalendarForMonth implements Calendar {
 
     protected void setYear(LocalDate date){
         this.year = date.getYear();
+    }
+
+    protected void setDayForTracking(LocalDate date){
+        this.dayForTracking=date;
+    }
+
+    public void setWeekendDays(List<DayOfWeek> weekendDays){
+        this.weekendDays=weekendDays;
     }
 
     protected abstract String formatMonthTitle();
@@ -112,7 +119,7 @@ public abstract class CalendarForMonth implements Calendar {
     protected List<String> formatMonthDays() {
         List<String> result = new ArrayList<>();
         int numberOfEmptySpaces = monthDays.get(0).getDayOfWeek().getValue()-weekStart.getValue();
-        //if (numberOfEmptySpaces<0){numberOfEmptySpaces==}
+        if (numberOfEmptySpaces<0){numberOfEmptySpaces=monthDays.get(0).getDayOfWeek().getValue()+(DAYS_IN_WEEK-weekStart.getValue());}
         for (int i = 0; i < numberOfEmptySpaces; i++) {
             result.add(printEmptySpace());
         }
@@ -146,12 +153,8 @@ public abstract class CalendarForMonth implements Calendar {
         setMonthDays(monthDays);
         setMonth(date);
         setYear(date);
-
     }
 
-    @Override
-    public void setWeekendDays(List<DayOfWeek> weekendDays){
-        this.weekendDays=weekendDays;
-    }
+    public abstract String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException;
 
 }

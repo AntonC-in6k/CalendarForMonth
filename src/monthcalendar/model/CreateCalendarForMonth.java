@@ -14,14 +14,11 @@ public class CreateCalendarForMonth {
     private int year;
 
     private List<LocalDate> monthDays;
-    private ParamHandler paramHandler;
 
-    public CreateCalendarForMonth(String[] parameter) {
-        paramHandler = new ParamHandler(parameter);
-        month = paramHandler.getMonth();
-        year = paramHandler.getYear();
+    public CreateCalendarForMonth(int month, int year) {
+        this.month = month;
+        this.year = year;
         daysInMonth = getNumberOfDays();
-
         monthDays = createMonthDays();
     }
 

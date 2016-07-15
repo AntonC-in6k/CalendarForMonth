@@ -135,4 +135,18 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
         f.close();
     }
 
+    @Override
+    public String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
+        baseInitialization(monthDays, date);
+        setDayForTracking(date);
+        writeCalendarInfile();
+        writeStyleSheetInFile();
+        return HEADER +
+                formatMonthTitle() +
+                makeTitle() +
+                monthDaysToString() +
+                FOOTER;
+    }
+
+
 }

@@ -1,13 +1,16 @@
 package monthcalendar;
 
-import java.time.DayOfWeek;
-import java.util.List;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.function.Supplier;
 
 /**
  * Created by employee on 7/14/16.
  */
-public interface Calendar  {
+public interface Calendar {
 
-    void setWeekendDays(List<DayOfWeek> weekendDays);
+    String generate(LocalDate date) throws IOException;
+
+    String generate(Supplier<LocalDate> dateSupplier) throws IOException;
 
 }

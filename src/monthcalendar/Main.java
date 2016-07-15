@@ -1,14 +1,9 @@
 package monthcalendar;
 
-import monthcalendar.model.CreateCalendarForMonth;
 import monthcalendar.model.ParamHandler;
-import monthcalendar.view.AnsiiCalendarForMonth;
-import monthcalendar.view.HtmlCalendarForMonth;
 
 import java.io.IOException;
-import java.time.DayOfWeek;
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDate;
 
 
 /**
@@ -18,21 +13,10 @@ import java.util.List;
 public class Main {
     public static void
     main(String[] args) throws IOException {
-        String[] parameter = new String[]{"-m=6", "-y=2016", "-o=ansii"};
-        List<DayOfWeek> weekendDays = Arrays.asList(DayOfWeek.WEDNESDAY,DayOfWeek.FRIDAY);
+        String[] parameter = new String[]{"-m=7", "-y=2016", "-o=ansii"};
         ParamHandler paramHandler = new ParamHandler(parameter);
-        CreateCalendarForMonth calendarForMonth = new CreateCalendarForMonth(parameter);
-        if (paramHandler.getFormat().equals("html")) {
-            HtmlCalendarForMonth htmlCalendar = new HtmlCalendarForMonth();
-            htmlCalendar.setWeekendDays(weekendDays);
-            htmlCalendar.printCalendar(calendarForMonth.getMonthDays(),
-                    calendarForMonth.getDateForView());
-        } else {
-            AnsiiCalendarForMonth ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.SATURDAY);
-            ansiiCalendar.setWeekendDays(weekendDays);
-            ansiiCalendar.printCalendar(calendarForMonth.getMonthDays(),
-                    calendarForMonth.getDateForView());
-        }
-        System.exit(0);
+        CalendarFacade calendarFacade = new CalendarFacade(paramHandler.getMonth(),
+                paramHandler.getYear(), paramHandler.getFormat());
+        System.out.println(calendarFacade.generate(LocalDate::now));
     }
 }

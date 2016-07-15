@@ -6,6 +6,7 @@ package monthcalendar.view;
 
 import org.junit.Test;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,9 +92,14 @@ public class HtmlOutputTest {
 
     @Test
     public void currentDayColor() {
-        loadCalendarForMonth(2016, 7, 14);
-        int currentDay = 14;
-        String line = htmlCalendar.monthDaysToString().toString();
-        assertThat(line, containsString("<td class=\"current-day\">" + (currentDay)));
+        int day = 14;
+        int year = 2016;
+        int month = 7;
+        int expectedDay = 19;
+        LocalDate date = LocalDate.of(year, month, day);
+        htmlCalendar = new HtmlCalendarForMonth(DayOfWeek.WEDNESDAY, LocalDate.of(year, month, expectedDay));
+        htmlCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        String line = htmlCalendar.monthDaysToString();
+        assertThat(line, containsString("<td class=\"current-day\">" + expectedDay));
     }
 }

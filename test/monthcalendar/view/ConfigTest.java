@@ -34,21 +34,21 @@ public class ConfigTest {
     }
 
     @Test
-    public void paramHandle(){
+    public void paramHandle() {
         loadCalendarForMonth(2016, 7, 14);
-        List<DayOfWeek> expected = Arrays.asList(DayOfWeek.WEDNESDAY,DayOfWeek.FRIDAY);
+        List<DayOfWeek> expected = Arrays.asList(DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY);
         ansiiCalendar.setWeekendDays(expected);
         int[] weekendsDaysIndex = {6, 8};
         String line = ansiiCalendar.monthDaysToString().toString();
         assertThat(line, allOf(
-                    containsString(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[0])),
-                    containsString(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[1]))));
+                containsString(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[0])),
+                containsString(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS + "    " + (weekendsDaysIndex[1]))));
     }
 
     @Test
     public void currentDayColor() {
         int day = 14;
-        int year =2016;
+        int year = 2016;
         int month = 7;
         int expectedDay = 19;
         LocalDate date = LocalDate.of(year, month, day);
@@ -61,7 +61,7 @@ public class ConfigTest {
     @Test
     public void firstDayInOutput() {
         int day = 14;
-        int year =2016;
+        int year = 2016;
         int month = 7;
         LocalDate date = LocalDate.of(year, month, day);
         ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.WEDNESDAY);

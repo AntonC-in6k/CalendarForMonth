@@ -28,7 +28,7 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
     @Override
     protected String formatMonthTitle() {
         return COLOR_FOR_WEEKENDS
-                + String.format("%35s", createMonthTitle())
+                + String.format("%36s", createMonthTitle() + "\n")
                 + COLOR_RESET;
     }
 
@@ -82,9 +82,15 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
     @Override
     public void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
         baseInitialization(monthDays, date);
-        System.out.println(formatMonthTitle());
-        System.out.println(makeTitle());
-        System.out.println(monthDaysToString());
+        System.out.print(formatMonthTitle());
+        System.out.print(makeTitle());
+        System.out.print(monthDaysToString());
     }
 
+    @Override
+    public String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
+        baseInitialization(monthDays, date);
+        setDayForTracking(date);
+        return formatMonthTitle() + makeTitle() + monthDaysToString();
+    }
 }
