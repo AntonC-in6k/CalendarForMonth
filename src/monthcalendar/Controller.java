@@ -6,7 +6,6 @@ import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Supplier;
 
 /**
  * Created by Mr_Blame on 17.07.2016.
@@ -17,6 +16,7 @@ public class Controller {
     private String format;
     private Period monthPeriod;
     private Calendar calendar;
+    private CommandHandler commandHandler;
 
     public Controller(Calendar calendar, LocalDate date) throws IOException {
         localDate = date;

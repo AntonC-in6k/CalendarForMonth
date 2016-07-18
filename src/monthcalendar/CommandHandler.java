@@ -6,14 +6,9 @@ import java.util.Scanner;
 /**
  * Created by employee on 7/18/16.
  */
-public class HandleCommands {
-    private ButtonCommands buttonCommands;
+public class CommandHandler {
 
-
-    public HandleCommands() {
-    }
-
-    public ButtonCommands handleCommand(String command) throws IOException {
+    public ButtonCommands handle(String command) throws IOException {
         return useCommand(buttonPress());
     }
 
@@ -28,7 +23,7 @@ public class HandleCommands {
     private ButtonCommands useCommand(String command) throws IOException {
         switch (command) {
             case "d":
-                return ButtonCommands.MOVE_LEFT;
+                return ButtonCommands.MOVE_RIGHT;
 
             case "a":
                 return ButtonCommands.MOVE_LEFT;

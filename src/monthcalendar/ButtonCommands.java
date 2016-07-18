@@ -1,8 +1,5 @@
 package monthcalendar;
 
-import java.io.IOException;
-import java.util.Scanner;
-
 /**
  * Created by employee on 7/18/16.
  */
