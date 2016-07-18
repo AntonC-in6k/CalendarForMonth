@@ -6,6 +6,7 @@ import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Supplier;
 
 /**
  * Created by Mr_Blame on 17.07.2016.
@@ -15,27 +16,18 @@ public class Controller {
     private LocalDate localDate;
     private String format;
     private Period monthPeriod;
-    private CalendarFacade calendarFacade;
+    private Calendar calendar;
 
-    public Controller() throws IOException {
-        localDate = LocalDate.now();
+    public Controller(Calendar calendar, LocalDate date) throws IOException {
+        localDate = date;
+        this.calendar = calendar;
         this.yearMonth = Arrays.asList(YearMonth.of(localDate.getYear(), localDate.getMonth()));
         format = "ansii";
         monthPeriod = new MonthPeriod(yearMonth.get(0));
     }
 
-    public Controller(LocalDate date) throws IOException {
-        this.localDate = date;
-        this.yearMonth = Arrays.asList(YearMonth.of(date.getYear(), date.getMonth()));
-        format = "ansii";
-        monthPeriod = new MonthPeriod(yearMonth.get(0));
-    }
-
-    public Controller(LocalDate date, String format) throws IOException {
-        this.localDate = date;
-        this.yearMonth = Arrays.asList(YearMonth.of(date.getYear(), date.getMonth()));
+    public void setFormat(String format) {
         this.format = format;
-        monthPeriod = new MonthPeriod(yearMonth.get(0));
     }
 
     public Period getPeriod() {
@@ -60,8 +52,11 @@ public class Controller {
         boolean flag = true;
         String button;
         while (flag) {
-            button=buttonPress();
-            if (button.equals("e")){flag=false; break;}
+            button = buttonPress();
+            if (button.equals("e")) {
+                flag = false;
+                break;
+            }
             handleButton(button);
         }
     }
@@ -98,7 +93,7 @@ public class Controller {
 
     protected void showPrevious() throws IOException {
         setMonthPeriod(monthPeriod.previous());
-        yearMonth = monthPeriod.previous().getMonths();
+        yearMonth = monthPeriod.getMonths();
         System.out.println(createCalendar());
     }
 
@@ -118,11 +113,8 @@ public class Controller {
         String result = "";
         for (YearMonth date :
                 yearMonth) {
-            calendarFacade = new CalendarFacade(date, format);
-            result += calendarFacade.generate(
-                    LocalDate.of(date.getYear(), date.getMonth(), localDate.getDayOfMonth()));
+            result += calendar.generate(date);
         }
         return result;
     }
-
 }

@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 public class HtmlCalendarForMonth extends CalendarForMonth {
@@ -43,6 +44,10 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
 
     public HtmlCalendarForMonth(DayOfWeek weekStart) {
         super(weekStart);
+    }
+
+    public HtmlCalendarForMonth(LocalDate currentDay) {
+        super(currentDay);
     }
 
     public HtmlCalendarForMonth(DayOfWeek weekStart, LocalDate currentDay) {
@@ -113,8 +118,8 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
     }
 
     @Override
-    public void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
-        baseInitialization(monthDays, date);
+    public void printCalendar(List<LocalDate> monthDays, YearMonth yearMonth) throws IOException {
+        baseInitialization(monthDays, yearMonth);
         writeCalendarInfile();
         writeStyleSheetInFile();
     }
@@ -136,9 +141,8 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
     }
 
     @Override
-    public String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
-        baseInitialization(monthDays, date);
-        setCurrentDay(date);
+    public String getCalendar(List<LocalDate> monthDays, YearMonth yearMonth) throws IOException {
+        baseInitialization(monthDays, yearMonth);
         writeCalendarInfile();
         writeStyleSheetInFile();
         return HEADER +

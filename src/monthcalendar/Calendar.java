@@ -2,6 +2,7 @@ package monthcalendar;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.function.Supplier;
 
 /**
@@ -9,8 +10,8 @@ import java.util.function.Supplier;
  */
 public interface Calendar {
 
-    String generate(LocalDate date) throws IOException;
+    String generate(YearMonth yearMonth) throws IOException;
 
-    String generate(Supplier<LocalDate> dateSupplier) throws IOException;
+//    String generate(Supplier<LocalDate> dateSupplier) throws IOException;
 
 }

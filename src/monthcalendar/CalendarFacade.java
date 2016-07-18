@@ -21,24 +21,24 @@ public class CalendarFacade implements Calendar {
     private CalendarForMonth calendarForMonth;
     private List<LocalDate> monthDays;
 
-    public CalendarFacade(YearMonth yearMonth, String format) throws IOException {
-        createCalendarForMonth = new CreateCalendarForMonth(yearMonth.getMonthValue(), yearMonth.getYear());
-        this.monthDays = createCalendarForMonth.getMonthDays();
+    public CalendarFacade(LocalDate date, String format) throws IOException {
         if (format.equals("ansii")) {
-            calendarForMonth = new AnsiiCalendarForMonth();
+            calendarForMonth = new AnsiiCalendarForMonth(date);
         } else {
-            calendarForMonth = new HtmlCalendarForMonth();
+            calendarForMonth = new HtmlCalendarForMonth(date);
         }
 
     }
 
     @Override
-    public String generate(LocalDate date) throws IOException {
-        return calendarForMonth.getCalendar(monthDays, date);
+    public String generate(YearMonth yearMonth) throws IOException {
+        createCalendarForMonth = new CreateCalendarForMonth(yearMonth.getMonthValue(), yearMonth.getYear());
+        this.monthDays = createCalendarForMonth.getMonthDays();
+        return calendarForMonth.getCalendar(monthDays, yearMonth);
     }
 
-    @Override
-    public String generate(Supplier<LocalDate> dateSupplier) throws IOException {
-        return generate(dateSupplier.get());
-    }
+//    @Override
+//    public String generate(Supplier<LocalDate> dateSupplier) throws IOException {
+//        return generate(dateSupplier.get());
+//    }
 }

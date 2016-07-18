@@ -4,6 +4,7 @@ import monthcalendar.model.ParamHandler;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 
 /**
@@ -13,10 +14,11 @@ import java.time.LocalDate;
 public class Main {
     public static void
     main(String[] args) throws IOException {
-        String[] parameter = new String[]{"-m=6", "-y=2016", "-o=ansii"};
+        String[] parameter = new String[]{"-m=7", "-y=2016", "-o=ansii"};
         ParamHandler paramHandler = new ParamHandler(parameter);
-        Controller controller = new Controller(LocalDate.of(
-                paramHandler.getYear(),paramHandler.getMonth(),14),paramHandler.getFormat());
+        LocalDate date = LocalDate.of(paramHandler.getYear(),paramHandler.getMonth(),14);
+        CalendarFacade calendarFacade = new CalendarFacade(date,paramHandler.getFormat());
+        Controller controller = new Controller(calendarFacade,date);
         controller.showInterface();
     }
 }

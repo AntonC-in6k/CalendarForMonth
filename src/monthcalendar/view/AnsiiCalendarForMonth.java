@@ -3,6 +3,7 @@ package monthcalendar.view;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 /**
@@ -19,6 +20,10 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
 
     public AnsiiCalendarForMonth(DayOfWeek weekStart) {
         super(weekStart);
+    }
+
+    public AnsiiCalendarForMonth(LocalDate currentDay) {
+        super(currentDay);
     }
 
     public AnsiiCalendarForMonth(DayOfWeek weekStart, LocalDate currentDay) {
@@ -80,17 +85,16 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
     }
 
     @Override
-    public void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
-        baseInitialization(monthDays, date);
+    public void printCalendar(List<LocalDate> monthDays, YearMonth yearMonth) throws IOException {
+        baseInitialization(monthDays, yearMonth);
         System.out.print(formatMonthTitle());
         System.out.print(dayTitleToString());
         System.out.print(monthDaysToString());
     }
 
     @Override
-    public String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
-        baseInitialization(monthDays, date);
-        setCurrentDay(date);
+    public String getCalendar(List<LocalDate> monthDays, YearMonth yearMonth) throws IOException {
+        baseInitialization(monthDays, yearMonth);
         return formatMonthTitle() + dayTitleToString() + monthDaysToString();
     }
 }

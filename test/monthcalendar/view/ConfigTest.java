@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,9 +29,9 @@ public class ConfigTest {
     }
 
     public void loadCalendarForMonth(int year, int month, int day) {
-        LocalDate date = LocalDate.of(year, month, day);
+        YearMonth yearMonth = YearMonth.of(year, month);
         ansiiCalendar = new AnsiiCalendarForMonth();
-        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), yearMonth);
     }
 
     @Test
@@ -51,9 +52,9 @@ public class ConfigTest {
         int year = 2016;
         int month = 7;
         int expectedDay = 19;
-        LocalDate date = LocalDate.of(year, month, day);
+        YearMonth yearMonth= YearMonth.of(year, month);
         ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.WEDNESDAY, LocalDate.of(year, month, expectedDay));
-        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), yearMonth);
         String line = ansiiCalendar.monthDaysToString();
         assertThat(line, containsString(AnsiiCalendarForMonth.COLOR_FOR_CURRENT_DAY + "   " + expectedDay));
     }
@@ -63,9 +64,9 @@ public class ConfigTest {
         int day = 14;
         int year = 2016;
         int month = 7;
-        LocalDate date = LocalDate.of(year, month, day);
+        YearMonth yearMonth= YearMonth.of(year, month);
         ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.WEDNESDAY);
-        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), yearMonth);
         String firstDay = "Wed";
         assertThat(ansiiCalendar.dayTitleToString().toString().trim().substring(0, 3), is(firstDay));
     }

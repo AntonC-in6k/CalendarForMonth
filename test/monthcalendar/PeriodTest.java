@@ -10,7 +10,9 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by Mr_Blame on 17.07.2016.
  */
-public class AbstractPeriodTest {
+public class PeriodTest {
+
+
     @Test
     public void returnNextMonth() throws Exception {
         YearMonth yearMonth = YearMonth.of(2016, 12);
@@ -29,12 +31,21 @@ public class AbstractPeriodTest {
     }
 
     @Test
+    public void nextPrevious() throws Exception {
+        YearMonth yearMonth = YearMonth.of(2016, 3);
+        YearMonth expected = YearMonth.of(2016, 3);
+        MonthPeriod monthPeriodPeriod = new MonthPeriod(yearMonth);
+        assertThat(monthPeriodPeriod.next().previous().getMonths().get(0), is(expected));
+    }
+
+    @Test
     public void increasePeriod() throws Exception {
         YearMonth yearMonth = YearMonth.of(2016, 1);
         YearMonth expected = YearMonth.of(2017, 12);
         MonthPeriod monthPeriodPeriod = new MonthPeriod(yearMonth);
         assertThat(monthPeriodPeriod.increase().next().getMonths().get(11), is(expected));
     }
+
 
     @Test
     public void degreesPeriod() throws Exception {

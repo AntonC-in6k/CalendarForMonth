@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class AnsiiOutputTest {
     }
 
     public void loadCalendarForMonth(int year, int month, int day) {
-        LocalDate date = LocalDate.of(year, month, day);
+        YearMonth yearMonth = YearMonth.of(year, month);
         ansiiCalendar = new AnsiiCalendarForMonth();
-        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), yearMonth);
     }
 
     @Test
@@ -85,9 +86,9 @@ public class AnsiiOutputTest {
         int year = 2016;
         int month = 7;
         int expectedDay = 17;
-        LocalDate date = LocalDate.of(year, month, day);
+        YearMonth yearMonth = YearMonth.of(year, month);
         ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.WEDNESDAY, LocalDate.of(year, month, expectedDay));
-        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), yearMonth);
         String line = ansiiCalendar.monthDaysToString();
         assertThat(line, containsString(AnsiiCalendarForMonth.COLOR_FOR_CURRENT_DAY + "   " + expectedDay));
     }

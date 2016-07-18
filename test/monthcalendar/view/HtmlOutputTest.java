@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +28,9 @@ public class HtmlOutputTest {
     }
 
     public void loadCalendarForMonth(int year, int month, int day) {
-        LocalDate date = LocalDate.of(year, month, day);
+        YearMonth yearMonth = YearMonth.of(year, month);
         htmlCalendar = new HtmlCalendarForMonth();
-        htmlCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        htmlCalendar.baseInitialization(getTableForJulyMonth(year, month, day), yearMonth);
     }
 
     @Test
@@ -96,9 +97,9 @@ public class HtmlOutputTest {
         int year = 2016;
         int month = 7;
         int expectedDay = 19;
-        LocalDate date = LocalDate.of(year, month, day);
+        YearMonth yearMonth = YearMonth.of(year, month);
         htmlCalendar = new HtmlCalendarForMonth(DayOfWeek.WEDNESDAY, LocalDate.of(year, month, expectedDay));
-        htmlCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
+        htmlCalendar.baseInitialization(getTableForJulyMonth(year, month, day), yearMonth);
         String line = htmlCalendar.monthDaysToString();
         assertThat(line, containsString("<td class=\"current-day\">" + expectedDay));
     }

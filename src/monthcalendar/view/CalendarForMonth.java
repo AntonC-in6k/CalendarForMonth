@@ -3,6 +3,7 @@ package monthcalendar.view;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +32,12 @@ public abstract class CalendarForMonth  {
         weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
     }
 
+    public CalendarForMonth(LocalDate currentDay){
+        this.weekStart=DayOfWeek.MONDAY;
+        this.currentDay = currentDay;
+        weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
+    }
+
     public CalendarForMonth(DayOfWeek weekStart){
         this.weekStart=weekStart;
         currentDay = LocalDate.now();
@@ -47,18 +54,14 @@ public abstract class CalendarForMonth  {
         this.monthDays = monthDays;
     }
 
-    protected void setMonth(LocalDate date){
-        this.month = date.getMonthValue();
+    protected void setMonth(YearMonth yearMonth){
+        this.month = yearMonth.getMonthValue();
     }
 
-    protected void setYear(LocalDate date){
-        this.year = date.getYear();
+    protected void setYear(YearMonth yearMonth){
+        this.year = yearMonth.getYear();
     }
 
-    protected void setCurrentDay(LocalDate date){
-        this.currentDay = LocalDate.of(
-                LocalDate.now().getYear(),LocalDate.now().getMonth(),date.getDayOfMonth());
-    }
 
     public void setWeekendDays(List<DayOfWeek> weekendDays){
         this.weekendDays=weekendDays;
@@ -147,14 +150,14 @@ public abstract class CalendarForMonth  {
         return day.getDayOfWeek() == weekStart.minus(1);
     }
 
-    public abstract void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException;
+    public abstract void printCalendar(List<LocalDate> monthDays, YearMonth yearMonth) throws IOException;
 
-    protected void baseInitialization(List<LocalDate> monthDays, LocalDate date){
+    protected void baseInitialization(List<LocalDate> monthDays, YearMonth yearMonth){
         setMonthDays(monthDays);
-        setMonth(date);
-        setYear(date);
+        setMonth(yearMonth);
+        setYear(yearMonth);
     }
 
-    public abstract String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException;
+    public abstract String getCalendar(List<LocalDate> monthDays, YearMonth yearMonth) throws IOException;
 
 }
