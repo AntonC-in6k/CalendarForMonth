@@ -13,10 +13,10 @@ import java.time.LocalDate;
 public class Main {
     public static void
     main(String[] args) throws IOException {
-        String[] parameter = new String[]{"-m=7", "-y=2016", "-o=ansii"};
+        String[] parameter = new String[]{"-m=6", "-y=2016", "-o=ansii"};
         ParamHandler paramHandler = new ParamHandler(parameter);
-        CalendarFacade calendarFacade = new CalendarFacade(paramHandler.getMonth(),
-                paramHandler.getYear(), paramHandler.getFormat());
-        System.out.println(calendarFacade.generate(LocalDate::now));
+        Controller controller = new Controller(LocalDate.of(
+                paramHandler.getYear(),paramHandler.getMonth(),14),paramHandler.getFormat());
+        controller.showInterface();
     }
 }

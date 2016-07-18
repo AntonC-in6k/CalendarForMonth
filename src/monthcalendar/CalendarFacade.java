@@ -8,6 +8,7 @@ import monthcalendar.view.HtmlCalendarForMonth;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
@@ -20,11 +21,11 @@ public class CalendarFacade implements Calendar {
     private CalendarForMonth calendarForMonth;
     private List<LocalDate> monthDays;
 
-    public CalendarFacade(int month, int year, String format) throws IOException {
-        createCalendarForMonth = new CreateCalendarForMonth(month, year);
+    public CalendarFacade(YearMonth yearMonth, String format) throws IOException {
+        createCalendarForMonth = new CreateCalendarForMonth(yearMonth.getMonthValue(), yearMonth.getYear());
         this.monthDays = createCalendarForMonth.getMonthDays();
         if (format.equals("ansii")) {
-            calendarForMonth = new AnsiiCalendarForMonth(DayOfWeek.SUNDAY);
+            calendarForMonth = new AnsiiCalendarForMonth();
         } else {
             calendarForMonth = new HtmlCalendarForMonth();
         }

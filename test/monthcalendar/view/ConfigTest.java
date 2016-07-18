@@ -67,7 +67,7 @@ public class ConfigTest {
         ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.WEDNESDAY);
         ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);
         String firstDay = "Wed";
-        assertThat(ansiiCalendar.makeTitle().toString().trim().substring(0, 3), is(firstDay));
+        assertThat(ansiiCalendar.dayTitleToString().toString().trim().substring(0, 3), is(firstDay));
     }
 }
 

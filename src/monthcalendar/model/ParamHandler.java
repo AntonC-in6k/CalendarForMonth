@@ -45,7 +45,6 @@ public class ParamHandler {
         return result;
     }
 
-
     private int paramForYear() {
         int result = 0;
         if (param == null) {

@@ -33,9 +33,9 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
     }
 
     @Override
-    protected String formatDayTitle(String dayName) {
+    protected String formatWeekendsInTitle(String dayName) {
         String result = new String();
-        if (chooseDayTitle(dayName) == "weekend") {
+        if (chooseWeekendsInTitle(dayName) == "weekend") {
             result += COLOR_FOR_WEEKENDS;
         }
         result += String.format("%5s", dayName);
@@ -45,12 +45,12 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
     }
 
     @Override
-    protected String formatDayTitleLine(String dayTitles) {
+    protected String formatDayTitle(String dayTitles) {
         return dayTitles + "\n";
     }
 
     @Override
-    protected String formatDay(LocalDate day) {
+    protected String formatDayStyle(LocalDate day) {
         String result = "";
         if (chooseColorForDayPrinting(day) == "weekday") {
             result += COLOR_RESET;
@@ -76,21 +76,21 @@ public class AnsiiCalendarForMonth extends CalendarForMonth {
 
     @Override
     protected String additionalForMonthDays(String tableDays) {
-        return tableDays + "\n";
+            return tableDays + "\n";
     }
 
     @Override
     public void printCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
         baseInitialization(monthDays, date);
         System.out.print(formatMonthTitle());
-        System.out.print(makeTitle());
+        System.out.print(dayTitleToString());
         System.out.print(monthDaysToString());
     }
 
     @Override
     public String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
         baseInitialization(monthDays, date);
-        setDayForTracking(date);
-        return formatMonthTitle() + makeTitle() + monthDaysToString();
+        setCurrentDay(date);
+        return formatMonthTitle() + dayTitleToString() + monthDaysToString();
     }
 }

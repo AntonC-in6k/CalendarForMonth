@@ -60,9 +60,9 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
 
 
     @Override
-    protected String formatDayTitle(String dayName) {
+    protected String formatWeekendsInTitle(String dayName) {
         String result = "<td";
-        if (chooseDayTitle(dayName) == "weekend") {
+        if (chooseWeekendsInTitle(dayName) == "weekend") {
             result += " class=\"weekend-day\"";
         }
         result += "> " + dayName + " </td>";
@@ -70,7 +70,7 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
     }
 
     @Override
-    protected String formatDayTitleLine(String dayTitles) {
+    protected String formatDayTitle(String dayTitles) {
         return "<table>\n" +
                 "<tr>\n" +
                 dayTitles +
@@ -79,7 +79,7 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
     }
 
     @Override
-    protected String formatDay(LocalDate day) {
+    protected String formatDayStyle(LocalDate day) {
         String result = "";
         if (chooseColorForDayPrinting(day) == "weekday") {
             result += "<td>";
@@ -123,7 +123,7 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
         FileWriter f = new FileWriter("index.html", false);
         f.append(HEADER +
                 formatMonthTitle() +
-                makeTitle() +
+                dayTitleToString() +
                 monthDaysToString() +
                 FOOTER);
         f.close();
@@ -138,12 +138,12 @@ public class HtmlCalendarForMonth extends CalendarForMonth {
     @Override
     public String getCalendar(List<LocalDate> monthDays, LocalDate date) throws IOException {
         baseInitialization(monthDays, date);
-        setDayForTracking(date);
+        setCurrentDay(date);
         writeCalendarInfile();
         writeStyleSheetInFile();
         return HEADER +
                 formatMonthTitle() +
-                makeTitle() +
+                dayTitleToString() +
                 monthDaysToString() +
                 FOOTER;
     }

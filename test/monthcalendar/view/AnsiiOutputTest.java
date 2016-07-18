@@ -35,14 +35,14 @@ public class AnsiiOutputTest {
     public void firstDayInOutput() {
         loadCalendarForMonth(2016, 7, 14);
         String firstDay = "Mon";
-        assertThat(ansiiCalendar.makeTitle().toString().trim().substring(0, 3), is(firstDay));
+        assertThat(ansiiCalendar.dayTitleToString().toString().trim().substring(0, 3), is(firstDay));
     }
 
     @Test
     public void tableOutputTitle() {
         loadCalendarForMonth(2016, 7, 14);
         String[] daysTitle = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-        String title = ansiiCalendar.makeTitle().toString().trim();
+        String title = ansiiCalendar.dayTitleToString().toString().trim();
         title = title.replace(AnsiiCalendarForMonth.COLOR_FOR_WEEKENDS, "");
         title = title.replace(AnsiiCalendarForMonth.COLOR_RESET, "");
         String[] days = title.split("  ");
@@ -84,7 +84,7 @@ public class AnsiiOutputTest {
         int day = 14;
         int year = 2016;
         int month = 7;
-        int expectedDay = 19;
+        int expectedDay = 17;
         LocalDate date = LocalDate.of(year, month, day);
         ansiiCalendar = new AnsiiCalendarForMonth(DayOfWeek.WEDNESDAY, LocalDate.of(year, month, expectedDay));
         ansiiCalendar.baseInitialization(getTableForJulyMonth(year, month, day), date);

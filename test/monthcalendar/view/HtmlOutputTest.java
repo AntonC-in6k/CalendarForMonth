@@ -36,7 +36,7 @@ public class HtmlOutputTest {
     public void firstDayInOutput() {
         loadCalendarForMonth(2016, 7, 14);
         String firstDay = "<td> Mon </td>";
-        assertThat(htmlCalendar.makeTitle().toString().trim(), is(containsString(firstDay)));
+        assertThat(htmlCalendar.dayTitleToString().toString().trim(), is(containsString(firstDay)));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class HtmlOutputTest {
                 "<td class=\"weekend-day\"> Sat </td>",
                 "<td class=\"weekend-day\"> Sun </td>"
         };
-        String title = htmlCalendar.makeTitle().toString().trim();
+        String title = htmlCalendar.dayTitleToString().toString().trim();
         assertThat(title, allOf(
                 containsString(daysTitle[0]),
                 containsString(daysTitle[1]),

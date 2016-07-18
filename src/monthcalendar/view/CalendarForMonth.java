@@ -1,7 +1,5 @@
 package monthcalendar.view;
 
-import monthcalendar.Calendar;
-
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -25,23 +23,23 @@ public abstract class CalendarForMonth  {
     private int year;
     private List<DayOfWeek> weekendDays;
     private DayOfWeek weekStart;
-    private LocalDate dayForTracking;
+    private LocalDate currentDay;
 
     public CalendarForMonth() {
         this.weekStart=DayOfWeek.MONDAY;
-        dayForTracking = LocalDate.now();
+        currentDay = LocalDate.now();
         weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
     }
 
     public CalendarForMonth(DayOfWeek weekStart){
         this.weekStart=weekStart;
-        dayForTracking = LocalDate.now();
+        currentDay = LocalDate.now();
         weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
     }
 
     public CalendarForMonth(DayOfWeek weekStart, LocalDate currentDay){
         this.weekStart=weekStart;
-        dayForTracking = currentDay;
+        this.currentDay = currentDay;
         weekendDays = Arrays.asList(DayOfWeek.SATURDAY,DayOfWeek.SUNDAY);
     }
 
@@ -57,8 +55,9 @@ public abstract class CalendarForMonth  {
         this.year = date.getYear();
     }
 
-    protected void setDayForTracking(LocalDate date){
-        this.dayForTracking=date;
+    protected void setCurrentDay(LocalDate date){
+        this.currentDay = LocalDate.of(
+                LocalDate.now().getYear(),LocalDate.now().getMonth(),date.getDayOfMonth());
     }
 
     public void setWeekendDays(List<DayOfWeek> weekendDays){
@@ -73,20 +72,20 @@ public abstract class CalendarForMonth  {
         return result;
     }
 
-    protected abstract String formatDayTitleLine(String dayTitles);
+    protected abstract String formatDayTitle(String dayTitles);
 
-    protected String makeTitle() {
+    protected String dayTitleToString() {
         String result = new String();
         for (String dayName :
                 createDaysTitle()) {
-            result += formatDayTitle(dayName);
+            result += formatWeekendsInTitle(dayName);
         }
-        return formatDayTitleLine(result);
+        return formatDayTitle(result);
     }
 
-    protected abstract String formatDayTitle(String dayName);
+    protected abstract String formatWeekendsInTitle(String dayName);
 
-    protected String chooseDayTitle(String dayName) {
+    protected String chooseWeekendsInTitle(String dayName) {
         String result = new String();
         if (dayName.equals(weekendDays.get(0).getDisplayName(TextStyle.SHORT,
                 new Locale(STYLE_OF_SHORT_DAYS_NAMES))) ||
@@ -108,15 +107,15 @@ public abstract class CalendarForMonth  {
 
     protected String monthDaysToString() {
         String result = "";
-        for (int i = 0; i < formatMonthDays().size(); i++) {
-            result += formatMonthDays().get(i);
+        for (int i = 0; i < createTableForDays().size(); i++) {
+            result += createTableForDays().get(i);
         }
         return additionalForMonthDays(result);
     }
 
     protected abstract String additionalForMonthDays(String tableDays);
 
-    protected List<String> formatMonthDays() {
+    protected List<String> createTableForDays() {
         List<String> result = new ArrayList<>();
         int numberOfEmptySpaces = monthDays.get(0).getDayOfWeek().getValue()-weekStart.getValue();
         if (numberOfEmptySpaces<0){numberOfEmptySpaces=monthDays.get(0).getDayOfWeek().getValue()+(DAYS_IN_WEEK-weekStart.getValue());}
@@ -124,21 +123,22 @@ public abstract class CalendarForMonth  {
             result.add(printEmptySpace());
         }
         for (int i = 0; i < monthDays.size(); i++) {
-            result.add(formatDay(monthDays.get(i)));
+            result.add(formatDayStyle(monthDays.get(i)));
         }
         return result;
     }
 
-    protected abstract String formatDay(LocalDate day);
+    protected abstract String formatDayStyle(LocalDate day);
 
     protected String chooseColorForDayPrinting(LocalDate day) {
-        if (day.getDayOfWeek() == weekendDays.get(0) || day.getDayOfWeek() == weekendDays.get(1)) {
-            return "weekend";
+        String result="weekday";
+        if (day.getDayOfWeek().equals(weekendDays.get(0)) || day.getDayOfWeek().equals(weekendDays.get(1))) {
+            result = "weekend";
         }
-        if (day.isEqual(dayForTracking)) {
-            return "current";
+        if (day.isEqual(currentDay)) {
+            result = "current";
         }
-        return "weekday";
+        return result;
     }
 
     protected abstract String printEmptySpace();
