@@ -128,6 +128,9 @@ public abstract class CalendarForMonth  {
         for (int i = 0; i < monthDays.size(); i++) {
             result.add(formatDayStyle(monthDays.get(i)));
         }
+        for (int i=0; i<(35-(monthDays.size()+numberOfEmptySpaces));i++){
+            result.add(printEmptySpace());
+        }
         return result;
     }
 

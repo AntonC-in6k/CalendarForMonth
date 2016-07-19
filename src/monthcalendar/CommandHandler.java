@@ -9,15 +9,7 @@ import java.util.Scanner;
 public class CommandHandler {
 
     public ButtonCommands handle(String command) throws IOException {
-        return useCommand(buttonPress());
-    }
-
-    protected String buttonPress() {
-        String result;
-        Scanner scanner = new Scanner(System.in);
-        result = scanner.next();
-        scanner.close();
-        return result;
+        return useCommand(command);
     }
 
     private ButtonCommands useCommand(String command) throws IOException {

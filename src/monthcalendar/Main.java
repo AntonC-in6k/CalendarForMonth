@@ -4,7 +4,6 @@ import monthcalendar.model.ParamHandler;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.YearMonth;
 
 
 /**
@@ -19,6 +18,8 @@ public class Main {
         LocalDate date = LocalDate.of(paramHandler.getYear(),paramHandler.getMonth(),14);
         CalendarFacade calendarFacade = new CalendarFacade(date,paramHandler.getFormat());
         Controller controller = new Controller(calendarFacade,date);
+        controller.setMonthsInColumn(3);
+        controller.setMonthsInRow(4);
         controller.showInterface();
     }
 }

@@ -79,5 +79,4 @@ public class PeriodTest {
         assertThat(monthPeriodPeriod.increase().previous().previous().getMonths().get(11), is(expected));
     }
 
-
 }
